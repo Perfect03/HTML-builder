@@ -1,30 +1,16 @@
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
-const process = require('process');
-
-
-console.log("Введите текст");
-
-async function lineFromFile() {
-  const fileStream = fs.createWriteStream(path.join(__dirname, 'text.txt'));
-
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: fileStream,
-    crlfDelay: Infinity,
-  });
-  for await (const line of rl) {
-   process.on(("exit"), () =>{
-   // console.log('Endgame');
-    fileStream.end();
-    })
-    process.on(("SIGINT"), () =>{
-     // console.log('Endgame');
-  fileStream.end();
-    })
-   /*  if (`${line}`== 'exit') {exit();}*/
-    fileStream.write(`${line}`);
+const fs = require('fs/promises');
+const rd = async function (path) {
+  try {
+    const files = await fs.readdir(path, {withFileTypes: true});
+    for (let file of files) {
+      let fn = file.name;
+      if (file.isFile()) {
+        console.log(`${fn.split('.')[0]} - ${fn.split('.')[1]} - ${(await fs.stat(`${path}/${fn}`)).size/1024}kb> `);
+      }
+    }
+  } catch (err) {
+    console.log(err);
   }
-}
-lineFromFile();
+};
+
+rd('./03-files-in-folder/secret-folder');

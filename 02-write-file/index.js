@@ -17,10 +17,6 @@ async function lineFromFile() {
   });
   for await (const line of rl) {
 
-  /* process.on(("exit"), () =>{
-   console.log('Endgame');
-    fileStream.end();
-    })*/
     process.on(("SIGINT"), () =>{
      console.log('Endgame');
   fileStream.end();
