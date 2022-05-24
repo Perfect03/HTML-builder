@@ -49,6 +49,7 @@ const buildPage = async function(...args) {
           }
         }
       }
+      fs.writeFile('./06-build-page/project-dist/index.html', template);
 } 
 catch(err) {
     console.log(err);

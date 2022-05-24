@@ -19,10 +19,10 @@ async function lineFromFile() {
 
     process.on(("SIGINT"), () =>{
      console.log('Endgame');
-  fileStream.end();
+  fileStream.end();process.exit();
     })
    if (`${line}`== 'exit') {console.log('Endgame');
-   fileStream.end();break;}
+   fileStream.end();process.exit();}
     fileStream.write(`${line}`);
   }
 }
